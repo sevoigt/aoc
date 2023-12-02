@@ -42,6 +42,9 @@ class Game(object):
                num_green >= max(self.draws['green']) and \
                num_blue >= max(self.draws['blue'])
 
+    def get_power(self):
+        return max(self.draws['red']) * max(self.draws['green']) * max(self.draws['blue'])
+
 
     def __repr__(self):
         return f'<Game {self.id}>'
@@ -57,9 +60,14 @@ lines = fid.readlines()
 games = [Game(line) for line in lines]
 
 total = 0
+powers = 0
 
 for game in games:
+
     if game.is_possible(12, 13, 14):
         total += game.id
 
-print('result:', total)
+    powers += game.get_power()
+
+print('result part 1:', total)
+print('result part 2:', powers)
