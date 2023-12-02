@@ -1,6 +1,6 @@
 """
 day 2
-puzzle part 1
+puzzle part 1+2
 """
 
 
@@ -11,7 +11,6 @@ class Game(object):
     def __init__(self, line):
         self.id = None
         self.draws = None
-        self.num_draws = None
 
         self.parse(line)
 
@@ -23,8 +22,7 @@ class Game(object):
 
         draws = game_part.split(';')
 
-        self.num_draws = len(draws)
-        empty = [0] * self.num_draws
+        empty = [0] * len(draws)
 
         self.draws = {'red' : empty,
                       'green' : empty.copy(),
@@ -41,6 +39,7 @@ class Game(object):
         return num_red >= max(self.draws['red']) and \
                num_green >= max(self.draws['green']) and \
                num_blue >= max(self.draws['blue'])
+
 
     def get_power(self):
         return max(self.draws['red']) * max(self.draws['green']) * max(self.draws['blue'])
