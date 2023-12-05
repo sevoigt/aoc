@@ -31,23 +31,7 @@ def convert(block, value):
     
     return value
 
-
-def create_dict(block):
-    """
-    Create a mapping dictionary for a block
-    -> nice idea but runs out of memory 
-    """
-    d = dict()
-
-    lines = block.split('\n')
-    for line in lines[1:]:
-        dest, src, num = get_numbers(line)
-        d.update(zip(range(src, src+num), range(dest, dest+num)))
-
-    return d
-
     
-
 
 fid = open("input.txt")
 c = fid.read()
@@ -55,15 +39,9 @@ c = fid.read()
 blocks = c.split('\n\n')
 
 seeds = get_numbers(blocks[0])
-
-#block_dicts = [create_dict(i) for i in blocks[1:]]
 locations = []
 
 for i in seeds:
-
-    # out of memory
-    #for k in block_dicts:
-    #    i = k[i] if i in k else i
     for k in blocks[1:]:
         i = convert(k, i)
     
