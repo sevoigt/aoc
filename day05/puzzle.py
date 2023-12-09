@@ -8,7 +8,7 @@ numbers are too large to use a mapping dict -> out of memory
 def get_numbers(line):
     """
     Get list of integer numbers from string. Numbers must be
-    separated by spaces.
+    separated by spaces. Does not work with negative numbers!
     """
     return [int(i) for i in line.split() if i.isdigit()]
 
