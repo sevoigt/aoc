@@ -2,6 +2,8 @@
 day 8
 """
 
+import itertools
+
 
 class Node(object):
     
@@ -62,12 +64,13 @@ for i in nodes.keys():
 next_nodes = [nodeobjs[i] for i in nodeobjs.keys() if i.endswith('A')]
 
 
-while not all_z:
-    _d, _m = divmod(steps, num_directions)
-    left = directions[_m]
+for left in itertools.cycle(directions):
+    
     next_nodes = [i.left for i in next_nodes] if left else \
                  [i.right for i in next_nodes] 
-    all_z = sum([0 if i.finish else 1 for i in next_nodes]) == 0 
     steps += 1
+    
+    if all(i.finish for i in next_nodes):
+        break
     
 print('result part 2:', steps)
