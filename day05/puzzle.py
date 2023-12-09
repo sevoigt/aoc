@@ -4,6 +4,9 @@ day 5
 numbers are too large to use a mapping dict -> out of memory
 """
 
+from joblib import Parallel, delayed
+import time
+
 
 def get_numbers(line):
     """
@@ -60,6 +63,7 @@ def convert_pp(block, value):
     return value
 
 
+
 fid = open("input.txt")
 c = fid.read()
 
@@ -67,8 +71,8 @@ blocks = c.split('\n\n')
 
 
 # part 1
-seeds = get_numbers(blocks[0])
 
+seeds = get_numbers(blocks[0])
 locations = []
 
 for i in seeds:
@@ -80,26 +84,12 @@ for i in seeds:
 print("result part 1:", min(locations))
 
 
-# part 2
+
+# part 2 - brute force
+
 ranges = list(zip(seeds[:-1], seeds[1:]))[::2]
 block_data = [preprocess_block(i) for i in blocks[1:]]
 
-smallest = 1e12
-
-'''
-for i in ranges:
-    for j in range(i[0], i[0]+i[1]):
-        for k in block_data:
-            j = convert_pp(k, j)
-
-        smallest = min(j, smallest)
-'''
-
-
-# brute force....
-
-from joblib import Parallel, delayed
-import time
 
 def process(i):
     smallest = 1e12
@@ -113,6 +103,7 @@ def process(i):
 
     print('completed range', i, 'in', time.time()-start, 's')
     return smallest
+
 
 results = Parallel(n_jobs=10)(delayed(process)(i) for i in ranges)
 
