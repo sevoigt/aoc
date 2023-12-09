@@ -1,5 +1,5 @@
 """
-day 9
+day 8
 """
 
 fid = open('input.txt')
@@ -36,10 +36,13 @@ print('result part 1:', steps)
 next_nodes = [i for i in nodes.keys() if i.endswith('A')]
 all_z = False
 steps = 0
+directions = [i == 'L' for i in directions]
 
 while not all_z:
-    left = directions[divmod(steps, num_directions)[1]] == 'L'
-    next_nodes = [nodes[i][0] if left else nodes[i][1] for i in next_nodes]
+    _d, _m = divmod(steps, num_directions)
+    left = directions[_m]
+    next_nodes = [nodes[i][0] for i in next_nodes] if left else \
+                 [nodes[i][1] for i in next_nodes] 
     all_z = sum([0 if i.endswith('Z') else 1 for i in next_nodes]) == 0 
     steps += 1
     
