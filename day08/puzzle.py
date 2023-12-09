@@ -3,7 +3,8 @@ day 8
 """
 
 import itertools
-from joblib import delayed, Parallel
+from functools import reduce
+
 
 
 class Node(object):
@@ -18,23 +19,21 @@ class Node(object):
         return f'<Node {self.name}>'
 
 
-class NodeIterator(object):
 
-    def __init__(self):
-        self.node = None
-        self.iterator = None
+def lcm(a, b):
+    """
+    least common multiple (kgV in German)
+    """
 
+    n = 1
+    m = 1
 
-    def catch_up(self, num_steps):
-        delta = num_steps
+    while m != 0:
+        d, m = divmod(n*a, b)
+        n += 1
 
-        for left in self.iterator:
-            self.node = self.node.left if left else self.node.right
-            delta -= 1
-            if delta == 0:
-                break
+    return d*b
 
-        return self.node.finish
 
 
 
@@ -56,7 +55,7 @@ for i in lines[2:]:
 
 
 # part 1
-'''
+
 next = 'AAA'
 steps = 0
 
@@ -66,7 +65,7 @@ while next != 'ZZZ':
     steps += 1
 
 print('result part 1:', steps)
-'''
+
 
 # part 2
 
@@ -82,51 +81,35 @@ for i in nodes.keys():
     nodeobjs[i].right = nodeobjs[nodes[i][1]]
 
 
-# follow the first node until a 'Z' node is found, then do the same
-# number of steps for all the other nodes and check if all are 'Z'.
-# Otherwise continue to traverse first node until next 'Z'
+# find out the turnaround cycles for all start nodes, i.e. the number of
+# steps it takes to get to each finish node. The least common multiple
+# of the cycles is the solution
 
-next_nodes = [nodeobjs[i] for i in nodeobjs.keys() if i.endswith('A')]
-first_node = next_nodes[0]
-next_nodes = next_nodes[1:]
-
-# iterator for every parallel node
-node_iterators = list()
-for i in next_nodes:
-    ni = NodeIterator()
-    ni.node = i
-    ni.iterator = itertools.cycle(directions)
-    node_iterators.append(ni)
+start_nodes = [nodeobjs[i] for i in nodeobjs.keys() if i.endswith('A')]
+cycles = list()
 
 
-jobs = len(next_nodes)
-steps = 0
-substeps = 0
-last_hit = 0
+for node in start_nodes:
 
-import time
+    steps = 0
+    last_hit = 0
 
-start = time.time()
+    for left in itertools.cycle(directions):
 
-for left in itertools.cycle(directions):
+        node = node.left if left else node.right
+        steps += 1
 
-    first_node = first_node.left if left else first_node.right
-    steps += 1
+        if node.finish:
 
-    if first_node.finish:
+            if steps == last_hit:
+                cycles.append(steps)
+                break
 
-        # parallel - actually slower
-        #finished = Parallel(n_jobs=jobs)(delayed(i.catch_up)(steps-last_hit) for i in node_iterators)
-
-        # single thread
-        finished = [i.catch_up(steps - last_hit) for i in node_iterators]
-
-        if all(finished):
-            break
-
-        last_hit = steps
+            last_hit = steps
+            steps = 0
 
 
-print(time.time()-start)
-print('result part 2:', steps)
+total2 = reduce(lambda x, y: lcm(x, y), cycles)
+
+print('result part 2:', total2)
 
