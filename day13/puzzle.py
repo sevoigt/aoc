@@ -3,32 +3,12 @@ day 13
 """
 
 import numpy as np
-import time
 
 
-def find_symmetry(values):
-    """
-    Compare left and right value from starting point within
-    array until either end of array is reached.
-    """
-
-    n = len(values)
-
-    for i in range(n-1):
-        sym = True
-        for k in range(min(i+1, n-i-1)):
-            if values[i-k] != values[i+k+1]:
-                sym = False
-
-        if sym:
-            return i
-
-    return -1
-
-
-def find_matrix_symmetry(matrix):
+def find_matrix_symmetry(matrix, s1=-1):
     """
     Find symmetry in rows. Pass transposed matrix for symmetry in columns
+    s1 is the previously found symmetry that is skipped
     """
     n = matrix.shape[0]
 
@@ -38,7 +18,7 @@ def find_matrix_symmetry(matrix):
             if (matrix[i-k, :] != matrix[i+k+1, :]).any():
                 sym = False
 
-        if sym:
+        if sym and (i+1) != s1:
             return i+1
 
     return -1
@@ -70,4 +50,30 @@ print('result part 1:', p1)
 p2 = 0
 
 for i in blocks:
-    pass
+    s0_row = find_matrix_symmetry(i)
+    s0_col = find_matrix_symmetry(i.transpose())
+
+    found = False
+
+    for j in range(i.shape[0]):
+        for k in range(i.shape[1]):
+            _blk = i.copy()
+            _blk[j, k] = not _blk[j, k]
+
+            s_row = find_matrix_symmetry(_blk, s0_row)
+            s_col = find_matrix_symmetry(_blk.transpose(), s0_col)
+
+            if s_row != -1:
+                p2 += 100 * s_row
+                found = True
+                break
+
+            if s_col != -1:
+                p2 += s_col
+                found = True
+                break
+
+        if found:
+            break
+
+print('result part 2:', p2)
