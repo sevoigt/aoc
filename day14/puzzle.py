@@ -26,7 +26,6 @@ def tilt(matrix):
                     if up == '.' and j == 0:
                         matrix[i, k] = '.'
                         matrix[j, k] = 'O'
-
                         break
     return matrix
 

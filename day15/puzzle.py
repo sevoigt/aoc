@@ -1,0 +1,1 @@
+"""day 15"""def hash(string):    h = 0    for i in string:        h += ord(i)        h *= 17        h = h % 256    return hfid = open('input.txt')line = fid.read().strip()p1 = sum([hash(i) for i in line.split(',')])print('result part 1', p1)
