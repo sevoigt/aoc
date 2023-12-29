@@ -1,0 +1,1 @@
+"""day 17"""fid = open('input_min.txt')grid = [list(i) for i in fid.read().strip().split('\n')]
