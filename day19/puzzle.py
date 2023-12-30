@@ -1,0 +1,1 @@
+"""day 19"""fid = open('input_min.txt')workflows, parts = fid.read().split('\n\n')workflows = workflows.split('\n')parts = parts.split('\n')
