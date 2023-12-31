@@ -70,4 +70,4 @@ while dist_traveled < dist:
 
 end = i+1
 
-print("result part 2", end-start+1)
+print("result part 2:", end-start+1)

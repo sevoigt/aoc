@@ -72,7 +72,7 @@ p1 = calc_score(grid)
 
 #print()
 #print(grid)
-print('result part 1', p1)
+print('result part 1:', p1)
 
 
 # part 2
@@ -101,4 +101,4 @@ p0 = 92
 pp = [96297, 96314, 96325, 96333, 96344, 96345, 96340, 96317, 96293]
 
 p2 = pp[(1000000000-p0) % len(pp) - 1]
-print('result part 2', p2)
+print('result part 2:', p2)

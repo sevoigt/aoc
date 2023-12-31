@@ -146,7 +146,7 @@ total = 0
 for i, hand in enumerate(hands):
     total += (i+1) * hand.bid
 
-print('result part 1', total)
+print('result part 1:', total)
 
 
 
@@ -164,4 +164,4 @@ total = 0
 for i, hand in enumerate(hands):
     total += (i+1) * hand.bid
 
-print('result part 2', total)
+print('result part 2:', total)
