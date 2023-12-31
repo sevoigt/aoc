@@ -1,0 +1,1 @@
+"""day 20"""fid = open('input_min.txt')
