@@ -4,8 +4,6 @@
 
 import numpy as np
 
-print("hello")
-
 data = np.loadtxt('input.txt', dtype=np.int64)
 
 l1 = data[:,0]
@@ -21,6 +19,6 @@ print(sum(np.abs(l2-l1)))
 res = 0
 
 for i in l1:
-    res += i*len(l2[l2==i])
+    res += i * len(l2[l2==i])
 
 print(res)
