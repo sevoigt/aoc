@@ -1,5 +1,5 @@
 """
-2024/01
+2024/day01
 """
 
 import numpy as np
