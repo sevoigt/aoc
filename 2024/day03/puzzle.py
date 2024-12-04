@@ -3,7 +3,6 @@
 """
 
 import re
-from gettext import find
 
 def product(mul_str):
     """
