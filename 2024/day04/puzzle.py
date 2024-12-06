@@ -77,3 +77,20 @@ print(res1)
 
 
 # part 2
+res2 = 0
+cross = ('MAS', 'SAM')
+grid = rows
+
+for idx_row, row in grid:
+    for idx_col, col in row:
+
+        if idx_row == (num_rows-3) or idx_col == (num_cols-3):
+            break
+
+        d1 = grid[idx_row][idx_col] + grid[idx_row+1][idx_col+1] + grid[idx_row+2][idx_col+2]
+        d2 = grid[idx_row+2][idx] + grid[idx_row+1][idx_col+1] + grid[idx_row][idx_col+2]
+
+        if d1 in cross or d2 in cross:
+            res2 += 1
+
+print(res2)
