@@ -44,7 +44,7 @@ def pivot(grid, reverse):
     return transposed
 
 
-with open('input_min.txt', 'r') as fid:
+with open('input.txt', 'r') as fid:
     rows = fid.readlines()
     rows = [i.strip() for i in rows]
 
@@ -81,16 +81,13 @@ res2 = 0
 cross = ('MAS', 'SAM')
 grid = rows
 
-for idx_row, row in grid:
-    for idx_col, col in row:
-
-        if idx_row == (num_rows-3) or idx_col == (num_cols-3):
-            break
+for idx_row in range(num_rows-2):
+    for idx_col in range(num_cols-2):
 
         d1 = grid[idx_row][idx_col] + grid[idx_row+1][idx_col+1] + grid[idx_row+2][idx_col+2]
-        d2 = grid[idx_row+2][idx] + grid[idx_row+1][idx_col+1] + grid[idx_row][idx_col+2]
+        d2 = grid[idx_row+2][idx_col] + grid[idx_row+1][idx_col+1] + grid[idx_row][idx_col+2]
 
-        if d1 in cross or d2 in cross:
+        if d1 in cross and d2 in cross:
             res2 += 1
 
 print(res2)
