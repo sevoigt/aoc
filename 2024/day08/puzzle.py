@@ -16,6 +16,7 @@ n_rows, n_cols = map.shape
 # all coordinates of a type of antennas
 res1 = set()
 antennas = dict()
+antinodes = np.zeros(map.shape, dtype=np.int64)
 
 for i in range(n_rows):
     for k in range(n_cols):
@@ -45,4 +46,18 @@ for ants in antennas.values():
         if pos_in_grid(map.shape, n2):
             res1.add(tuple(n2))
 
+        # part 2
+        antinodes[tuple(a)] = 1
+        antinodes[tuple(b)] = 1
+        pos = n1
+        while pos_in_grid(map.shape, pos):
+            antinodes[tuple(pos)] = 1
+            pos -= delta
+
+        pos = n2
+        while pos_in_grid(map.shape, pos):
+            antinodes[tuple(pos)] = 1
+            pos += delta
+
 print(len(res1))
+print(sum(antinodes.flatten()))
