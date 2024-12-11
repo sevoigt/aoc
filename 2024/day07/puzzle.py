@@ -2,17 +2,21 @@
 2024/day07
 """
 
+import itertools
+
 def get_op_result(numbers, op):
     """
-    op = binary number where 0 = mul and 1 = add
+    op = tuple of operator characters
     """
     res = numbers[0]
 
     for idx, i in enumerate(op):
-        if i == '0':
-            res *= numbers[idx+1]
-        elif i == '1':
+        if i == '+':
             res += numbers[idx+1]
+        elif i == '*':
+            res *= numbers[idx+1]
+        elif i == '|':
+            res = int(str(res)+str(numbers[idx+1]))
         else:
             raise ValueError('Unknown token: ', i)
 
@@ -22,7 +26,7 @@ def get_op_result(numbers, op):
 results = list()
 numbers = list()
 
-with open('input_min.txt', 'r') as fid:
+with open('input.txt', 'r') as fid:
     for i in fid:
         _r, _o = i.split(':')
         results.append(int(_r))
@@ -36,8 +40,8 @@ ok = set()
 for i in range(len(results)):
     n = len(numbers[i])
 
-    for k in range(2**(n-1)):
-        if get_op_result(numbers[i], format(k, f'0{n-1}b')) == results[i]:
+    for ops in itertools.product('+*', repeat=n-1):
+        if get_op_result(numbers[i], ops) == results[i]:
             res1 += results[i]
             ok.add(i)
             break
@@ -51,6 +55,11 @@ not_ok = set(range(len(results))).difference(ok)
 res2 = 0
 
 for i in not_ok:
-    pass
+    n = len(numbers[i])
+
+    for ops in itertools.product('+*|', repeat=n-1):
+        if get_op_result(numbers[i], ops) == results[i]:
+            res2+= results[i]
+            break
 
 print(res1 + res2)
