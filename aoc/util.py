@@ -35,3 +35,11 @@ def pos_in_grid(shape, pos):
     """
     return pos[0] > -1 and pos[1] > -1 and  \
            pos[0] < shape[0] and pos[1] < shape[1]
+
+
+def read_whole_file(fname):
+    """
+    Just read the whole conent of the given file
+    """
+    with open(fname, 'r') as fid:
+        return fid.read()
