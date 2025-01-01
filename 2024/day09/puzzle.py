@@ -4,6 +4,7 @@
 
 from aoc.util import read_whole_file
 
+
 def relax(inp):
     """
     Expand the description string into blocks and spaces
