@@ -1,4 +1,4 @@
-year=2024
+year=2025
 dir=$year/$1
 
 if [ -d $dir ]; then
